@@ -296,6 +296,17 @@ section { padding: 80px 0; }
   color: var(--primary);
 }
 .section-icon svg { width: 20px; height: 20px; }
+a.section-icon-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+  border: 1px solid transparent;
+}
+a.section-icon-link:hover {
+  background: hsla(187, 86%, 53%, 0.22);
+  border-color: hsla(187, 86%, 53%, 0.4);
+  transform: translateY(-1px);
+}
 
 .section-title {
   font-family: var(--font-display);
@@ -336,20 +347,28 @@ section { padding: 80px 0; }
 .case-study {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 40px;
-  margin-bottom: 24px;
+  border-radius: 18px;
+  padding: 28px 32px;
+  margin-bottom: 16px;
   transition: border-color 0.3s;
   position: relative;
   overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  column-gap: 32px;
+  row-gap: 0;
 }
 .case-study:hover { border-color: var(--border-hover); }
+.case-study > .cs-header { grid-column: 1 / -1; }
+.case-study > .cs-description,
+.case-study > .cs-highlights,
+.case-study > .cs-tags { grid-column: 1; }
 
 .cs-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -362,9 +381,9 @@ section { padding: 80px 0; }
 }
 
 .cs-logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -374,6 +393,34 @@ section { padding: 80px 0; }
   color: var(--primary);
   border: 1px solid hsla(187, 86%, 53%, 0.2);
   background: hsla(187, 86%, 53%, 0.08);
+  overflow: hidden;
+  flex-shrink: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+/* When the logo contains an image, give it a clean white plate */
+a.cs-logo:has(img) {
+  background: hsl(0, 0%, 98%);
+  border-color: hsla(0, 0%, 100%, 0.12);
+}
+a.cs-logo:has(img):hover {
+  border-color: hsla(187, 86%, 53%, 0.6);
+  background: white;
+  transform: translateY(-1px);
+}
+a.cs-logo:hover {
+  border-color: hsla(187, 86%, 53%, 0.5);
+  background: hsla(187, 86%, 53%, 0.18);
+  transform: translateY(-1px);
+}
+.cs-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+  box-sizing: border-box;
+  display: block;
 }
 
 .cs-company {
@@ -404,23 +451,24 @@ section { padding: 80px 0; }
 
 .cs-description {
   color: var(--fg-muted);
-  font-size: 15px;
-  line-height: 1.7;
-  margin-bottom: 24px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin-bottom: 14px;
   max-width: 680px;
 }
 
 .cs-highlights {
   list-style: none;
-  margin-bottom: 24px;
+  margin-bottom: 14px;
 }
 .cs-highlights li {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--fg-muted);
-  padding: 4px 0;
+  padding: 2px 0;
+  line-height: 1.5;
 }
 .cs-highlights li .bullet {
   color: var(--primary);
@@ -428,17 +476,20 @@ section { padding: 80px 0; }
   flex-shrink: 0;
 }
 
-/* Metrics grid */
+/* Metrics — 2-column grid in right column of case-study */
 .cs-metrics {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 0;
+  grid-column: 2;
+  grid-row: 2 / span 99;
+  align-self: center;
 }
 
 .metric {
-  padding: 18px;
-  border-radius: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: hsla(240, 5%, 12%, 0.5);
 }
@@ -449,6 +500,7 @@ section { padding: 80px 0; }
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 2px;
+  line-height: 1.1;
 }
 
 .metric-label {
@@ -470,6 +522,64 @@ section { padding: 80px 0; }
 
 /* ---- PRESS SECTION ---- */
 .bg-muted-section { background: hsla(240, 4%, 14%, 0.3); }
+
+/* ---- PARTNER LOGO WALL ---- */
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+}
+.logo-tile {
+  aspect-ratio: 16 / 9;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 16px;
+  transition: filter 0.25s, border-color 0.2s, transform 0.2s, background 0.2s, color 0.2s;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-muted);
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  overflow: hidden;
+}
+/* Image tiles: render as white silhouettes for a uniform press-wall look */
+.logo-tile:has(img) img {
+  filter: brightness(0) invert(1);
+  opacity: 0.65;
+  transition: filter 0.3s ease, opacity 0.2s ease;
+}
+.logo-tile:has(img):hover img {
+  filter: none;
+  opacity: 1;
+}
+/* Tile hover (works for both image and text variants) */
+.logo-tile:hover {
+  border-color: hsla(187, 86%, 53%, 0.45);
+  background: var(--bg-muted);
+  transform: translateY(-2px);
+  color: var(--fg);
+}
+.logo-tile img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+@media (max-width: 1024px) {
+  .partner-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 540px) {
+  .partner-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .logo-tile { font-size: 12px; padding: 10px 12px; }
+}
 
 .highlights-grid {
   display: grid;
@@ -515,6 +625,286 @@ section { padding: 80px 0; }
 }
 .highlight-list li:last-child { border-bottom: none; }
 .highlight-list li strong { color: var(--fg); font-weight: 600; }
+
+/* ---- RECOMMENDATIONS ---- */
+.rec-cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+.rec-linkedin-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 22px 14px 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  color: var(--fg);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+.rec-linkedin-cta:hover {
+  border-color: hsla(207, 90%, 54%, 0.55);
+  background: hsla(207, 90%, 54%, 0.06);
+  transform: translateY(-1px);
+}
+.rec-linkedin-cta .li-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: hsl(207, 90%, 54%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.rec-linkedin-cta .li-content {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.rec-linkedin-cta .li-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg);
+}
+.rec-linkedin-cta .li-meta {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+.rec-linkedin-cta .li-arrow {
+  color: var(--primary);
+  font-size: 18px;
+  margin-left: 4px;
+  transition: transform 0.2s;
+}
+.rec-linkedin-cta:hover .li-arrow {
+  transform: translateX(4px);
+}
+
+.rec-carousel {
+  position: relative;
+  margin-top: 32px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+.rec-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: rec-scroll 72s linear infinite;
+}
+.rec-carousel:hover .rec-track,
+.rec-carousel.paused .rec-track { animation-play-state: paused; }
+@keyframes rec-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-50% - 10px)); }
+}
+.rec-card {
+  flex: 0 0 380px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+  transition: border-color 0.3s, transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 320px;
+}
+.rec-card:hover { border-color: var(--border-hover); }
+.rec-quote-mark {
+  position: absolute;
+  top: 8px;
+  right: 22px;
+  font-family: var(--font-display);
+  font-size: 90px;
+  line-height: 1;
+  color: hsla(187, 86%, 53%, 0.12);
+  pointer-events: none;
+  user-select: none;
+  font-weight: 700;
+}
+.rec-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+.rec-avatar {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--bg);
+  letter-spacing: -0.02em;
+  overflow: hidden;
+}
+.rec-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.rec-meta { min-width: 0; flex: 1; }
+.rec-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 3px;
+}
+.rec-title {
+  font-size: 13px;
+  color: var(--fg-muted);
+  line-height: 1.4;
+}
+.rec-relation {
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+.rec-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--fg-muted);
+  margin-bottom: 12px;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rec-read-more {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 16px;
+  color: var(--primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s, color 0.2s;
+  align-self: flex-start;
+}
+.rec-read-more:hover { gap: 8px; color: var(--accent); }
+.rec-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid hsla(240, 4%, 20%, 0.6);
+  gap: 12px;
+}
+.rec-date {
+  font-size: 12px;
+  color: var(--fg-dim);
+}
+.rec-link {
+  font-size: 13px;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s;
+  white-space: nowrap;
+}
+.rec-link:hover { gap: 8px; }
+
+/* Modal */
+.rec-modal {
+  position: fixed;
+  inset: 0;
+  background: hsla(240, 6%, 4%, 0.78);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.rec-modal.open { display: flex; opacity: 1; }
+.rec-modal-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(12px);
+  transition: transform 0.3s ease;
+}
+.rec-modal.open .rec-modal-card { transform: translateY(0); }
+.rec-modal-card .rec-quote-mark {
+  top: 16px;
+  right: 28px;
+  font-size: 110px;
+}
+.rec-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-muted);
+  border: 1px solid var(--border);
+  color: var(--fg-muted);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  z-index: 2;
+  line-height: 1;
+}
+.rec-modal-close:hover { background: var(--bg); color: var(--fg); }
+.rec-modal-text {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--fg);
+  margin: 24px 0;
+  white-space: pre-line;
+}
+.rec-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid hsla(240, 4%, 20%, 0.6);
+  gap: 12px;
+}
 
 /* ---- CONTACT ---- */
 .contact { text-align: center; padding: 80px 0 60px; position: relative; }
@@ -620,10 +1010,14 @@ footer {
   .stat-item { text-align: center; }
   .hero-visual { order: -1; }
   .hero-photo-wrapper { width: 200px; height: 240px; }
-  .case-study { padding: 24px; }
+  .case-study { padding: 24px; grid-template-columns: 1fr; column-gap: 0; }
+  .case-study > .cs-metrics { grid-column: 1; grid-row: auto; flex-direction: row; flex-wrap: wrap; margin-top: 8px; }
+  .case-study > .cs-metrics > .metric { flex: 1 1 calc(50% - 6px); }
   .cs-header { flex-direction: column; }
-  .cs-metrics { grid-template-columns: 1fr 1fr; }
   .highlights-grid { grid-template-columns: 1fr; }
+  .rec-card { flex: 0 0 300px; padding: 22px; min-height: 300px; }
+  .rec-modal-card { padding: 28px; }
+  .rec-modal-card .rec-quote-mark { font-size: 80px; right: 20px; }
   .nav-links { display: none; }
   .nav-links.open {
     display: flex;
@@ -643,7 +1037,7 @@ footer {
 }
 @media (max-width: 480px) {
   .hero-stats { flex-direction: column; gap: 16px; }
-  .cs-metrics { grid-template-columns: 1fr; }
+  .case-study > .cs-metrics > .metric { flex: 1 1 100%; }
   .contact-links { flex-direction: column; align-items: center; }
 }
 </style>
@@ -656,7 +1050,8 @@ footer {
     <div class="nav-logo"><span class="gradient-text">Mike Barsky</span></div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#experience">Experience</a></li>
-      <li><a href="#highlights">Highlights</a></li>
+      <li><a href="#highlights">Press</a></li>
+      <li><a href="#recommendations">Recommendations</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -737,15 +1132,15 @@ footer {
       <div class="cs-header">
         <div>
           <div class="cs-company-row">
-            <div class="cs-logo">R7</div>
+            <a href="https://re7.capital" target="_blank" rel="noopener" class="cs-logo" aria-label="Visit Re7 Labs"><img src="assets/logos/re7labs.png" alt="Re7 Labs" onerror="this.parentElement.textContent='R7'"></a>
             <span class="cs-company">Re7 Labs</span>
-            <span style="font-size:12px;color:var(--fg-dim);margin-left:8px;">~$1B AUM DeFi Fund</span>
+            <span style="font-size:12px;color:var(--fg-dim);margin-left:8px;">Innovation arm of Re7 Capital · On-chain vault curator</span>
           </div>
           <div class="cs-title">Marketing Lead — Growth Strategy & Execution Across Campaigns, Social, and Inbound Funnels</div>
         </div>
         <div class="cs-date">Jan 2025 — Jan 2026</div>
       </div>
-      <p class="cs-description">First marketing hire at a ~$1B AUM DeFi fund. Led social, campaigns, and growth systems. Coordinated marketing around 3 fund launches, built content and distribution loops on X, grew newsletter to 20K+ subscribers, created performance dashboards, and managed $200K+ annual budget across PR, content, and ecosystem initiatives.</p>
+      <p class="cs-description">First marketing hire. Owned social, campaigns, and growth across 3 fund launches. Managed $200K+ annual budget across PR, content, and ecosystem.</p>
       <div class="cs-metrics">
         <div class="metric">
           <div class="metric-value gradient-text">3.5×</div>
@@ -773,66 +1168,25 @@ footer {
       </div>
     </div>
 
-    <!-- Re7 BTC Yield Fund -->
-    <div class="case-study reveal">
-      <div class="cs-header">
-        <div>
-          <div class="cs-company-row">
-            <div class="cs-logo">R7</div>
-            <span class="cs-company">Re7 Capital × Starknet</span>
-          </div>
-          <div class="cs-title">BTC Yield Fund Launch — Institutional-Grade Campaign</div>
-        </div>
-        <div class="cs-date">Oct 2025</div>
-      </div>
-      <p class="cs-description">Planned and coordinated the launch of Re7 BTC Yield Strategy in partnership with Starknet. Organized 3 private LP breakfasts in London, Dubai, and Singapore for institutional and HNW investors. Delivered fully compliant messaging and visuals.</p>
-      <ul class="cs-highlights">
-        <li><span class="bullet">•</span> Secured earned media in Bitcoin Yield Podcast, The Rollup, The Block</li>
-        <li><span class="bullet">•</span> Delivered institutional-grade, fully compliant messaging and visuals</li>
-        <li><span class="bullet">•</span> Coordinated marketing across 3 cities for institutional LP audience</li>
-      </ul>
-      <div class="cs-metrics">
-        <div class="metric">
-          <div class="metric-value gradient-text">3</div>
-          <div class="metric-label">Cities (LON / DXB / SIN)</div>
-        </div>
-        <div class="metric">
-          <div class="metric-value gradient-text">3</div>
-          <div class="metric-label">Private LP Breakfasts</div>
-        </div>
-        <div class="metric">
-          <div class="metric-value gradient-text">5+</div>
-          <div class="metric-label">Earned Media Placements</div>
-        </div>
-      </div>
-      <div class="cs-tags">
-        <span class="tag">Product Launch</span>
-        <span class="tag">Institutional Marketing</span>
-        <span class="tag">Event Planning</span>
-        <span class="tag">Earned Media</span>
-        <span class="tag">Compliance</span>
-      </div>
-    </div>
-
     <!-- Re7 Capital Brand -->
     <div class="case-study reveal">
       <div class="cs-header">
         <div>
           <div class="cs-company-row">
-            <div class="cs-logo">R7</div>
+            <a href="https://re7.capital" target="_blank" rel="noopener" class="cs-logo" aria-label="Visit Re7 Capital"><img src="assets/logos/re7capital.png" alt="Re7 Capital" onerror="this.parentElement.textContent='R7'"></a>
             <span class="cs-company">Re7 Capital</span>
-            <span style="font-size:12px;color:var(--fg-dim);margin-left:8px;">~$1B AUM</span>
+            <span style="font-size:12px;color:var(--fg-dim);margin-left:8px;">~$1B AUM DeFi Fund</span>
           </div>
           <div class="cs-title">Brand Presence & Thought Leadership</div>
         </div>
         <div class="cs-date">Jan 2025 — Jan 2026</div>
       </div>
-      <p class="cs-description">Built Re7's brand presence through strategic ecosystem partnerships, thought leadership placements, and event strategy. Secured coverage in Bloomberg, Coindesk, Hedgeweek, and more.</p>
+      <p class="cs-description">Built brand presence through ecosystem partnerships, thought leadership, and events.</p>
       <ul class="cs-highlights">
-        <li><span class="bullet">•</span> Partnerships with World Liberty Financial, VMS Global, Blackrock sBUIDL</li>
-        <li><span class="bullet">•</span> Coverage in Bloomberg, Coindesk, Hedgeweek, DL News, The Block</li>
-        <li><span class="bullet">•</span> Organized 5+ private events for LPs & HNWIs</li>
-        <li><span class="bullet">•</span> Speaking slots at AVAX Summit, Consensus, ETH Dublin, and more</li>
+        <li><span class="bullet">•</span> GTM for 3 fund launches — private LP events in London, Dubai, Singapore</li>
+        <li><span class="bullet">•</span> Coverage: Bloomberg, Coindesk, Hedgeweek, DL News, The Block</li>
+        <li><span class="bullet">•</span> 5+ private LP/HNW events organized</li>
+        <li><span class="bullet">•</span> Secured speaking slots at AVAX Summit, Consensus, ETH Dublin, and more</li>
       </ul>
       <div class="cs-metrics">
         <div class="metric">
@@ -858,23 +1212,27 @@ footer {
       </div>
     </div>
 
-    <!-- Dmany -->
+    <!-- Scaleswap -->
     <div class="case-study reveal">
       <div class="cs-header">
         <div>
           <div class="cs-company-row">
-            <div class="cs-logo">Dm</div>
-            <span class="cs-company">Dmany / Scaleswap</span>
+            <a href="https://scaleswap.io" target="_blank" rel="noopener" class="cs-logo" aria-label="Visit Scaleswap"><img src="assets/logos/scaleswap.png" alt="Scaleswap" onerror="this.parentElement.textContent='SS'"></a>
+            <span class="cs-company">Scaleswap</span>
           </div>
           <div class="cs-title">Head of Growth — From Concept to 100K Users</div>
         </div>
         <div class="cs-date">Oct 2021 — Jan 2025</div>
       </div>
-      <p class="cs-description">Same founding team; Scaleswap was the earlier product. As Head of Growth, took Dmany from concept to scale. Built full marketing function from scratch, managed 80K newsletter subscribers, designed incentive systems, launched KOL campaigns, and led 14 Scaleswap IDO events.</p>
+      <p class="cs-description">Head of Growth, concept to scale. Built marketing from scratch, ran KOL campaigns, and led 14 IDO events.</p>
       <div class="cs-metrics">
         <div class="metric">
           <div class="metric-value gradient-text">100K</div>
           <div class="metric-label">Registered Users</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value gradient-text">14</div>
+          <div class="metric-label">IDO Events Led</div>
         </div>
         <div class="metric">
           <div class="metric-value gradient-text">$250K</div>
@@ -898,14 +1256,15 @@ footer {
       <div class="cs-header">
         <div>
           <div class="cs-company-row">
-            <div class="cs-logo">AE</div>
+            <a href="https://ascendex.com" target="_blank" rel="noopener" class="cs-logo" aria-label="Visit AscendEX"><img src="assets/logos/ascendex.png" alt="AscendEX" onerror="this.parentElement.textContent='AE'"></a>
+
             <span class="cs-company">AscendEX (BitMax)</span>
           </div>
           <div class="cs-title">Marketing Lead — CIS Market Expansion</div>
         </div>
         <div class="cs-date">Aug — Dec 2024</div>
       </div>
-      <p class="cs-description">Built a KOL database and ambassador network from scratch. Designed incentive-based reward campaigns that drove consistent monthly growth in registrations and trading volume.</p>
+      <p class="cs-description">Built KOL database and ambassador network from scratch. Designed incentive campaigns driving monthly registrations and trading volume.</p>
       <div class="cs-metrics">
         <div class="metric">
           <div class="metric-value gradient-text">120+</div>
@@ -928,13 +1287,13 @@ footer {
       </div>
     </div>
 
-    <!-- Gowide / Artmoby -->
+    <!-- Gowide -->
     <div class="case-study reveal">
       <div class="cs-header">
         <div>
           <div class="cs-company-row">
-            <div class="cs-logo">GW</div>
-            <span class="cs-company">Gowide (Artmoby)</span>
+            <a href="https://gowide.com" target="_blank" rel="noopener" class="cs-logo" aria-label="Visit Gowide"><img src="assets/logos/gowide.png" alt="Gowide" onerror="this.parentElement.textContent='GW'"></a>
+            <span class="cs-company">Gowide</span>
           </div>
           <div class="cs-title">Digital Marketing — Affiliate BD & Performance Campaigns</div>
         </div>
@@ -965,43 +1324,161 @@ footer {
   </div>
 </section>
 
-<!-- HIGHLIGHTS -->
+<!-- PRESS & PARTNERS -->
 <section id="highlights" class="bg-muted-section">
   <div class="container">
     <div class="section-header reveal">
       <div class="section-icon">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
       </div>
-      <h2 class="section-title">Highlights</h2>
+      <h2 class="section-title">Press &amp; Partners</h2>
     </div>
-    <p class="section-subtitle reveal reveal-d1">Media coverage, speaking engagements, and co-authored research.</p>
+    <p class="section-subtitle reveal reveal-d1">Featured in, collaborated with, and co-authored research with these teams.</p>
 
-    <div class="highlights-grid">
-      <div class="highlight-card reveal reveal-d1">
-        <h3><span class="icon-wrapper">📰</span> Press & Media</h3>
-        <ul class="highlight-list">
-          <li><strong>Bloomberg News</strong> — World Liberty Financial × Re7 Capital</li>
-          <li><strong>Coindesk</strong> — Ecosystem partnership coverage</li>
-          <li><strong>Hedgeweek</strong> — Award campaign PR & partnerships</li>
-          <li><strong>The Block, DL News, Bankless Times</strong> — Product launches</li>
-          <li><strong>The Digital Banker</strong> — VMS Global partnership</li>
-        </ul>
+    <div class="partner-grid reveal reveal-d2">
+      <a href="https://www.bloomberg.com" target="_blank" rel="noopener" class="logo-tile" aria-label="Bloomberg"><img src="assets/partners/bloomberg.png" alt="Bloomberg" loading="lazy" onerror="this.parentElement.textContent='Bloomberg'"></a>
+      <a href="https://www.coindesk.com" target="_blank" rel="noopener" class="logo-tile" aria-label="CoinDesk"><img src="assets/partners/coindesk.png" alt="CoinDesk" loading="lazy" onerror="this.parentElement.textContent='CoinDesk'"></a>
+      <a href="https://www.theblock.co" target="_blank" rel="noopener" class="logo-tile" aria-label="The Block"><img src="assets/partners/theblock.png" alt="The Block" loading="lazy" onerror="this.parentElement.textContent='The Block'"></a>
+      <a href="https://www.dlnews.com" target="_blank" rel="noopener" class="logo-tile" aria-label="DL News"><img src="assets/partners/dlnews.png" alt="DL News" loading="lazy" onerror="this.parentElement.textContent='DL News'"></a>
+      <a href="https://www.hedgeweek.com" target="_blank" rel="noopener" class="logo-tile" aria-label="Hedgeweek"><img src="assets/partners/hedgeweek.png" alt="Hedgeweek" loading="lazy" onerror="this.parentElement.textContent='Hedgeweek'"></a>
+      <a href="https://www.banklesstimes.com" target="_blank" rel="noopener" class="logo-tile" aria-label="Bankless Times"><img src="assets/partners/banklesstimes.svg" alt="Bankless Times" loading="lazy" onerror="this.parentElement.textContent='Bankless Times'"></a>
+      <a href="https://www.artemis.xyz" target="_blank" rel="noopener" class="logo-tile" aria-label="Artemis"><img src="assets/partners/artemis.png" alt="Artemis" loading="lazy" onerror="this.parentElement.textContent='Artemis'"></a>
+      <a href="https://dune.com" target="_blank" rel="noopener" class="logo-tile" aria-label="Dune Analytics"><img src="assets/partners/dune.png" alt="Dune" loading="lazy" onerror="this.parentElement.textContent='Dune'"></a>
+      <a href="https://cointelegraph.com" target="_blank" rel="noopener" class="logo-tile" aria-label="Cointelegraph"><img src="assets/partners/cointelegraph.png" alt="Cointelegraph" loading="lazy" onerror="this.parentElement.textContent='Cointelegraph'"></a>
+      <a href="https://www.avaxsummit.com" target="_blank" rel="noopener" class="logo-tile" aria-label="AVAX Summit"><img src="assets/partners/avax.png" alt="AVAX Summit" loading="lazy" onerror="this.parentElement.textContent='AVAX Summit'"></a>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMMENDATIONS -->
+<section id="recommendations">
+  <div class="container">
+    <div class="section-header reveal">
+      <a href="https://www.linkedin.com/in/mikebarsky/details/recommendations/" target="_blank" rel="noopener" class="section-icon section-icon-link" aria-label="View all recommendations on LinkedIn">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-4 4z"/></svg>
+      </a>
+      <h2 class="section-title">Recommendations</h2>
+    </div>
+
+    <div class="rec-carousel reveal reveal-d2" id="recCarousel">
+      <div class="rec-track" id="recTrack">
+
+        <article class="rec-card" data-photo="assets/recs/stan.jpeg" data-initials="SS">
+          <span class="rec-quote-mark">"</span>
+          <div class="rec-header">
+            <div class="rec-avatar"><img src="assets/recs/stan.jpeg" alt="Stan Stolberg" onerror="this.parentElement.textContent='SS'"></div>
+            <div class="rec-meta">
+              <div class="rec-name">Stan Stolberg</div>
+              <div class="rec-title">AI Enabler at OVB Holding AG · Founder, Blocksoft</div>
+            </div>
+          </div>
+          <p class="rec-text">Working with Mike was an absolute pleasure. He is one of the most self-motivated, resilient, and reliable operations leaders I've ever met. His extensive experience in Web3, digital marketing, and project management allowed him to effectively manage complex operations, streamline workflows, and drive consistent results. Mike skillfully connected our diverse team, maintained clarity across all project phases, and executed tasks with remarkable precision. His proactive approach, clear communication, and dedication to excellence made collaboration effortless and highly productive. I strongly recommend Mike to any team seeking a driven, knowledgeable, and dependable manager.</p>
+          <button type="button" class="rec-read-more">Read full →</button>
+          <div class="rec-footer">
+            <span class="rec-date">June 13, 2025</span>
+          </div>
+        </article>
+
+        <article class="rec-card" data-photo="assets/recs/nelli.jpeg" data-initials="NO">
+          <span class="rec-quote-mark">"</span>
+          <div class="rec-header">
+            <div class="rec-avatar"><img src="assets/recs/nelli.jpeg" alt="Nelli Orlova" onerror="this.parentElement.textContent='NO'"></div>
+            <div class="rec-meta">
+              <div class="rec-name">Nelli Orlova</div>
+              <div class="rec-title">CEO @ InnMind · VC & Angel Investing · Web3 & AI Seed/Series A</div>
+            </div>
+          </div>
+          <p class="rec-text">Mike is definitely one of the best project managers I have ever worked with. He is confident, efficient, attentive to details, always open to learning new things, responsible, a team player, and forward-thinking. It was a pure pleasure to work with him. Mike will be a good match for an advanced startup or scale-up in Web3 and other verticals due to his commitment to results, deliverables, and high performance.</p>
+          <button type="button" class="rec-read-more">Read full →</button>
+          <div class="rec-footer">
+            <span class="rec-date">December 23, 2024</span>
+          </div>
+        </article>
+
+        <article class="rec-card" data-photo="assets/recs/ralf.jpeg" data-initials="RG">
+          <span class="rec-quote-mark">"</span>
+          <div class="rec-header">
+            <div class="rec-avatar"><img src="assets/recs/ralf.jpeg" alt="Ralf Gerteis" onerror="this.parentElement.textContent='RG'"></div>
+            <div class="rec-meta">
+              <div class="rec-name">Ralf Gerteis</div>
+              <div class="rec-title">Web3 & AI Strategist · Tokenomics & RWA Expert · Venture & Fund Advisor</div>
+            </div>
+          </div>
+          <p class="rec-text">I worked with Mike for several years and I can only say that he is a role model in various ways. Mike is ambitious, highly reliable and trustworthy, stress resistant, skilled (and always eager to learn) and he has the right social skills. He developed from a talented project manager to a COO who holds everything together in a fast-paced and challenging emerging tech startup environment. No matter of the position, Mike is a great team player, hands-on and knows how to get things done. And at the same time, Mike is simply also a great and empathic person. I'm looking forward to work with Mike again when there is any chance.</p>
+          <button type="button" class="rec-read-more">Read full →</button>
+          <div class="rec-footer">
+            <span class="rec-date">November 2, 2024</span>
+          </div>
+        </article>
+
+        <article class="rec-card" data-photo="assets/recs/nelson.jpeg" data-initials="NI">
+          <span class="rec-quote-mark">"</span>
+          <div class="rec-header">
+            <div class="rec-avatar"><img src="assets/recs/nelson.jpeg" alt="Nelson Inno" onerror="this.parentElement.textContent='NI'"></div>
+            <div class="rec-meta">
+              <div class="rec-name">Nelson Inno</div>
+              <div class="rec-title">CEO @ WeSpark · Co-Creator of El Salvador's Modern Finance & Bitcoin Diploma</div>
+            </div>
+          </div>
+          <p class="rec-text">When it truly counts, doing business and working together is all about trust and quality of work. I have been working together with Mike for the past 20 months in a high-growth, high-stakes, high-impact, and definitely high-pressure tech startup environment. After working along with him on complex products with lengthy technical processes I can say that Mike is one person that I seriously trust. Mike is extremely reliable, and he doesn't break — things get hard, big, complex, and stressful, but with Mike on the team, you can be sure everything is manageable. I fully endorse Mike both as a working colleague and as a friend. I often regarded him as "the single person holding everything together".</p>
+          <button type="button" class="rec-read-more">Read full →</button>
+          <div class="rec-footer">
+            <span class="rec-date">September 18, 2024</span>
+          </div>
+        </article>
+
+        <article class="rec-card" data-photo="assets/recs/dmytro.jpeg" data-initials="DB">
+          <span class="rec-quote-mark">"</span>
+          <div class="rec-header">
+            <div class="rec-avatar"><img src="assets/recs/dmytro.jpeg" alt="Dmytro Bohdanov" onerror="this.parentElement.textContent='DB'"></div>
+            <div class="rec-meta">
+              <div class="rec-name">Dmytro Bohdanov</div>
+              <div class="rec-title">Custom Software Partner for Telehealth Practices</div>
+            </div>
+          </div>
+          <p class="rec-text">Mike was a valuable member of our team for over two years, consistently demonstrating strong business development skills and reliability. His talent for negotiating, both online and at conferences, led to a few partnerships that expanded our client base. Mike's positive attitude made him an indispensable asset, helping our team reach important milestones.</p>
+          <button type="button" class="rec-read-more">Read full →</button>
+          <div class="rec-footer">
+            <span class="rec-date">September 6, 2024</span>
+          </div>
+        </article>
+
+        <article class="rec-card" data-photo="assets/recs/filip.jpeg" data-initials="FS">
+          <span class="rec-quote-mark">"</span>
+          <div class="rec-header">
+            <div class="rec-avatar"><img src="assets/recs/filip.jpeg" alt="Filip Sokol" onerror="this.parentElement.textContent='FS'"></div>
+            <div class="rec-meta">
+              <div class="rec-name">Filip Sokol</div>
+              <div class="rec-title">Product & Research in Digital Assets</div>
+            </div>
+          </div>
+          <p class="rec-text">I had a pleasure to work with Mike at Scaleswap and Dmany and would highly recommend him. His deep expertise and innovative solutions were instrumental in the success of our complex projects. As an exceptional collaborator, Mike leverages tools like Notion to keep everyone organized and consistently delivers quality work on time. His integrity, reliability, and dedication to supporting his team make him an invaluable asset. If you're looking for a talented professional to drive your initiatives forward, Mike is the guy!</p>
+          <button type="button" class="rec-read-more">Read full →</button>
+          <div class="rec-footer">
+            <span class="rec-date">September 5, 2024</span>
+          </div>
+        </article>
+
       </div>
+    </div>
+  </div>
 
-      <div class="highlight-card reveal reveal-d2">
-        <h3><span class="icon-wrapper">🎤</span> Events</h3>
-        <ul class="highlight-list">
-          <li>Secured speaking slots and panels for the team at AVAX Summit, HFM, Digiassets, DAS, ETH Dublin, Consensus, Staking Circle</li>
-          <li><strong>Podcasts:</strong> Coordinated team appearances on Bitcoin Yield Podcast, The Rollup</li>
-        </ul>
+  <!-- Modal -->
+  <div class="rec-modal" id="recModal" role="dialog" aria-modal="true" aria-labelledby="recModalName">
+    <div class="rec-modal-card">
+      <button type="button" class="rec-modal-close" id="recModalClose" aria-label="Close">×</button>
+      <span class="rec-quote-mark">"</span>
+      <div class="rec-header">
+        <div class="rec-avatar" id="recModalAvatar"></div>
+        <div class="rec-meta">
+          <div class="rec-name" id="recModalName"></div>
+          <div class="rec-title" id="recModalTitle"></div>
+        </div>
       </div>
-
-      <div class="highlight-card reveal reveal-d3">
-        <h3><span class="icon-wrapper">📊</span> Research & Reports</h3>
-        <ul class="highlight-list">
-          <li><strong>Artemis Report</strong> — "Onchain Yields: What the Data Shows & What's Next"</li>
-          <li><strong>Dune Analytics × Re7 Capital</strong> — "How Tokenized Funds Are Rewiring Global Yield"</li>
-        </ul>
+      <p class="rec-modal-text" id="recModalText"></p>
+      <div class="rec-modal-footer">
+        <span class="rec-date" id="recModalDate"></span>
+        <a href="https://www.linkedin.com/in/mikebarsky/details/recommendations/" target="_blank" rel="noopener" class="rec-link">View on LinkedIn →</a>
       </div>
     </div>
   </div>
@@ -1148,6 +1625,59 @@ setTimeout(typewriterTick, 600);
       }
     }
   }, TICK_MS);
+})();
+
+// ---- Recommendations: carousel + modal ----
+(function () {
+  const carousel = document.getElementById('recCarousel');
+  const track = document.getElementById('recTrack');
+  if (!carousel || !track) return;
+
+  // Duplicate cards once for seamless infinite loop
+  Array.from(track.children).forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  const modal = document.getElementById('recModal');
+  const modalClose = document.getElementById('recModalClose');
+  const mAvatar = document.getElementById('recModalAvatar');
+  const mName = document.getElementById('recModalName');
+  const mTitle = document.getElementById('recModalTitle');
+  const mText = document.getElementById('recModalText');
+  const mDate = document.getElementById('recModalDate');
+
+  function openModal(card) {
+    mAvatar.innerHTML = card.querySelector('.rec-avatar').innerHTML;
+    mName.textContent = card.querySelector('.rec-name').textContent;
+    mTitle.textContent = card.querySelector('.rec-title').textContent;
+    mText.textContent = card.querySelector('.rec-text').textContent;
+    mDate.textContent = card.querySelector('.rec-date').textContent;
+    modal.classList.add('open');
+    carousel.classList.add('paused');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    carousel.classList.remove('paused');
+    document.body.style.overflow = '';
+  }
+
+  // Open on "Read full" or any non-link click on the card body
+  track.addEventListener('click', e => {
+    if (e.target.closest('.rec-link')) return;
+    const card = e.target.closest('.rec-card');
+    if (!card) return;
+    if (e.target.closest('.rec-read-more') || e.target.closest('.rec-text')) {
+      openModal(card);
+    }
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
 })();
 </script>
 
